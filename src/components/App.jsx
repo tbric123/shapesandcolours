@@ -29,7 +29,7 @@ function App() {
         <div>
             <Header/>
             <div className="componentArea">
-                <Shape colour={shapeColour}/>
+                <Shape colour={shapeColour} shape={promptValues.shape}/>
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
