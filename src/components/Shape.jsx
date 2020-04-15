@@ -25,6 +25,7 @@ function Shape(props) {
     return (
         <div className="shapeBox">
             <div className="shape" style={shapeStyle}></div>
+            <div className="feedback">{props.feedback}</div>
         </div>
     );
 }
