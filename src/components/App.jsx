@@ -3,6 +3,10 @@ import {v4 as uuidv4} from "uuid";
 
 /* Data Imports */
 import colours from "../data/colours";
+import shapes from "../data/shapes";
+
+/* Utilities */
+import {getRandomElement} from "../utilities/Utilities";
 
 /* Component Imports */
 import Header from "./Header";
@@ -15,14 +19,8 @@ function App() {
     const [shapeColour,
         setShapeColour] = React.useState("white");
 
-    const [promptColour, setPromptColour] = React.useState(generateRandomColour());
-    generateRandomColour();
+    const [promptValues, setPromptValues] = React.useState({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
 
-    function generateRandomColour() {
-        const colourIndex = Math.floor(Math.random() * colours.length);
-        return colours[colourIndex];
-    }
-    
     function changeColour(newColour) {
         setShapeColour(newColour);
     }
@@ -34,7 +32,7 @@ function App() {
                 <Shape colour={shapeColour}/>
             </div>
 
-            <Prompt shape="square" colour={promptColour}/>
+            <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 
             <div className="componentArea">
                 {colours.map(function(colour) {
