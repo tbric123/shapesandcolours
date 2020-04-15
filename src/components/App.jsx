@@ -1,4 +1,10 @@
 import React from "react";
+import {v4 as uuidv4} from "uuid";
+
+/* Data Imports */
+import colours from "../data/colours";
+
+/* Component Imports */
 import Header from "./Header";
 import Shape from "./Shape";
 import Prompt from "./Prompt";
@@ -9,10 +15,18 @@ function App() {
     const [shapeColour,
         setShapeColour] = React.useState("white");
 
+    const [promptColour, setPromptColour] = React.useState(generateRandomColour());
+    generateRandomColour();
+
+    function generateRandomColour() {
+        const colourIndex = Math.floor(Math.random() * colours.length);
+        return colours[colourIndex];
+    }
+    
     function changeColour(newColour) {
         setShapeColour(newColour);
     }
-
+    
     return (
         <div>
             <Header/>
@@ -20,12 +34,12 @@ function App() {
                 <Shape colour={shapeColour}/>
             </div>
 
-            <Prompt shape="square" colour="orange"/>
+            <Prompt shape="square" colour={promptColour}/>
 
             <div className="componentArea">
-                <ColourButton onPress={changeColour} colour="orange"/>
-                <ColourButton onPress={changeColour} colour="yellow"/>
-                <ColourButton onPress={changeColour} colour="green"/>
+                {colours.map(function(colour) {
+                    return <ColourButton key={uuidv4()} onPress={changeColour} colour={colour}/>;
+                })}
             </div>
 
             <Footer/>
