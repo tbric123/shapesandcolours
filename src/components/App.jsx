@@ -22,7 +22,15 @@ function App() {
     const [promptValues, setPromptValues] = React.useState({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
 
     function changeColour(newColour) {
+        // Set the colour of the shape to what the user specified
         setShapeColour(newColour);
+
+        // Advance to the next shape after 1 second
+        setTimeout(function() {
+            setPromptValues({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
+            setShapeColour("white");
+        }, 1000);
+
     }
     
     return (
