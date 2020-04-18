@@ -6,7 +6,16 @@ function ColourButton(props) {
     }
 
     return (
-        <button className="colourButton" style={buttonColour} onClick={() => {props.onPress(props.colour)}}></button>
+        <button
+            className="colourButton"
+            style={buttonColour}
+            onClick={() => {
+                if (props.clickable) {
+                    props.onPress(props.colour);
+                }
+        }}
+        
+        ></button>
     );
 }
 

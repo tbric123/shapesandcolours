@@ -17,46 +17,78 @@ import InformationBar from "./InformationBar";
 import Footer from "./Footer";
 
 function App() {
+    let newButtonColours;
+
     const [shapeColour,
         setShapeColour] = React.useState(Utilities.STARTING_COLOUR);
-    const [shapeFeedback, setShapeFeedback] = React.useState(Utilities.BLANK_FEEDBACK);
-    const [promptValues, setPromptValues] = React.useState({colour: Utilities.getRandomElement(colours), shape: Utilities.getRandomElement(shapes)});
-    const [round, setRound] = React.useState(1);
-    const [score, setScore] = React.useState(0);
+    const [buttonColours,
+        setButtonColours] = React.useState(Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT));
+    const [shapeFeedback,
+        setShapeFeedback] = React.useState(Utilities.BLANK_FEEDBACK);
+    const [promptValues,
+        setPromptValues] = React.useState({
+        colour: Utilities.getRandomElement(buttonColours, true),
+        shape: Utilities.getRandomElement(shapes, true)
+    });
+    const [round,
+        setRound] = React.useState(1);
+    const [score,
+        setScore] = React.useState(0);
+    const [buttonsClickable,
+        setClickable] = React.useState(true);
 
     function checkChoice(newColour) {
         // Set the colour of the shape to what the user specified
         setShapeColour(newColour);
-        
+
         if (promptValues.colour === newColour) {
-          setShapeFeedback("Correct!");
-          setScore(score + 1);
+            setShapeFeedback("Correct!");
+            setScore(score + 1);
         } else {
-          setShapeFeedback("Incorrect!");
+            setShapeFeedback("Incorrect!");
         }
 
+        // Prevent buttons from being clicked before the next round
+        setClickable(false);
+
         // Advance to the next round after 1 second
-        setTimeout(function() {
-            setPromptValues({colour: Utilities.getRandomElement(colours), shape: Utilities.getRandomElement(shapes)});
+        setTimeout(function () {
+            setRound(round + 1);
             setShapeColour(Utilities.STARTING_COLOUR);
             setShapeFeedback(Utilities.BLANK_FEEDBACK);
+            newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT)
+            setButtonColours(newButtonColours);
+            setPromptValues({
+                colour: Utilities.getRandomElement(newButtonColours, true),
+                shape: Utilities.getRandomElement(shapes, true)
+            });
+            setClickable(true);
         }, 1000);
 
     }
-    
+
     return (
         <div>
             <Header/>
             <div className="componentArea">
-                <Shape colour={shapeColour} shape={promptValues.shape} feedback={shapeFeedback}/>
+                <Shape
+                    colour={shapeColour}
+                    shape={promptValues.shape}
+                    feedback={shapeFeedback}/>
             </div>
 
-            <Prompt shape={promptValues.shape} colour={promptValues.colour} />
+            <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
             <InformationBar title="Score" information={score}/>
+            <InformationBar title="Round" information={round}/>
             <div className="componentArea">
-                {colours.map(function(colour) {
-                    return <ColourButton key={uuidv4()} onPress={checkChoice} colour={colour}/>;
-                })}
+                {buttonColours
+                    .map(function (colour) {
+                        return <ColourButton
+                            key={uuidv4()}
+                            onPress={checkChoice}
+                            colour={colour}
+                            clickable={buttonsClickable}/>;
+                    })}
             </div>
 
             <Footer/>
