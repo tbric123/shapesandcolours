@@ -53,16 +53,21 @@ function App() {
 
         // Advance to the next round after 1 second
         setTimeout(function () {
-            setRound(round + 1);
-            setShapeColour(Utilities.STARTING_COLOUR);
             setShapeFeedback(Utilities.BLANK_FEEDBACK);
-            newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT)
-            setButtonColours(newButtonColours);
-            setPromptValues({
-                colour: Utilities.getRandomElement(newButtonColours, true),
-                shape: Utilities.getRandomElement(shapes, true)
-            });
-            setClickable(true);
+            if (round < Utilities.MAX_ROUND) {
+                setRound(round + 1);
+                setShapeColour(Utilities.STARTING_COLOUR);
+                newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
+                setButtonColours(newButtonColours);
+                setPromptValues({
+                    colour: Utilities.getRandomElement(newButtonColours, true),
+                    shape: Utilities.getRandomElement(shapes, true)
+                });
+                setClickable(true);
+            } else {
+                setPromptValues({colour: "", shape: ""})
+            }
+
         }, 1000);
 
     }
@@ -71,15 +76,17 @@ function App() {
         <div>
             <Header/>
             <div className="componentArea">
+                {promptValues.shape !== "" && 
                 <Shape
                     colour={shapeColour}
                     shape={promptValues.shape}
-                    feedback={shapeFeedback}/>
+                    feedback={shapeFeedback}/>}
+
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
             <InformationBar title="Score" information={score}/>
-            <InformationBar title="Round" information={round}/>
+            <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             <div className="componentArea">
                 {buttonColours
                     .map(function (colour) {
