@@ -6,7 +6,7 @@ import colours from "../data/colours";
 import shapes from "../data/shapes";
 
 /* Utilities */
-import {getRandomElement} from "../utilities/Utilities";
+import * as Utilities from "../utilities/Utilities";
 
 /* Component Imports */
 import Header from "./Header";
@@ -18,13 +18,11 @@ import Footer from "./Footer";
 
 function App() {
     const [shapeColour,
-        setShapeColour] = React.useState("white");
-    const [shapeFeedback, setShapeFeedback] = React.useState("");
-    const [promptValues, setPromptValues] = React.useState({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
+        setShapeColour] = React.useState(Utilities.STARTING_COLOUR);
+    const [shapeFeedback, setShapeFeedback] = React.useState(Utilities.BLANK_FEEDBACK);
+    const [promptValues, setPromptValues] = React.useState({colour: Utilities.getRandomElement(colours), shape: Utilities.getRandomElement(shapes)});
     const [round, setRound] = React.useState(1);
     const [score, setScore] = React.useState(0);
-
-    const MAX_ROUND = 3;
 
     function checkChoice(newColour) {
         // Set the colour of the shape to what the user specified
@@ -39,9 +37,9 @@ function App() {
 
         // Advance to the next round after 1 second
         setTimeout(function() {
-            setPromptValues({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
-            setShapeColour("white");
-            setShapeFeedback("");
+            setPromptValues({colour: Utilities.getRandomElement(colours), shape: Utilities.getRandomElement(shapes)});
+            setShapeColour(Utilities.STARTING_COLOUR);
+            setShapeFeedback(Utilities.BLANK_FEEDBACK);
         }, 1000);
 
     }
