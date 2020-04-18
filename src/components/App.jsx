@@ -13,6 +13,7 @@ import Header from "./Header";
 import Shape from "./Shape";
 import Prompt from "./Prompt";
 import ColourButton from "./ColourButton";
+import InformationBar from "./InformationBar";
 import Footer from "./Footer";
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
         setShapeColour] = React.useState("white");
     const [shapeFeedback, setShapeFeedback] = React.useState("");
     const [promptValues, setPromptValues] = React.useState({colour: getRandomElement(colours), shape: getRandomElement(shapes)});
+    const [round, setRound] = React.useState(1);
+    const [score, setScore] = React.useState(0);
+
+    const MAX_ROUND = 3;
 
     function checkChoice(newColour) {
         // Set the colour of the shape to what the user specified
@@ -27,6 +32,7 @@ function App() {
         
         if (promptValues.colour === newColour) {
           setShapeFeedback("Correct!");
+          setScore(score + 1);
         } else {
           setShapeFeedback("Incorrect!");
         }
@@ -47,8 +53,8 @@ function App() {
                 <Shape colour={shapeColour} shape={promptValues.shape} feedback={shapeFeedback}/>
             </div>
 
-            <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
-
+            <Prompt shape={promptValues.shape} colour={promptValues.colour} />
+            <InformationBar title="Score" information={score}/>
             <div className="componentArea">
                 {colours.map(function(colour) {
                     return <ColourButton key={uuidv4()} onPress={checkChoice} colour={colour}/>;
