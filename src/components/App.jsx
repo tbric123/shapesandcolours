@@ -72,23 +72,26 @@ function App() {
 
     }
 
+    function startNewGame() {
+
+    }
     return (
         <div>
             <Header/>
             <div className="componentArea">
-                {promptValues.shape !== "" && 
-                <Shape
+                {promptValues.shape !== "" && <Shape
                     colour={shapeColour}
                     shape={promptValues.shape}
                     feedback={shapeFeedback}/>}
 
             </div>
-
+    
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
+            
             <InformationBar title="Score" information={score}/>
             <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             <div className="componentArea">
-                {buttonColours
+            {promptValues.shape === "" ? <button>Start Over</button> : buttonColours
                     .map(function (colour) {
                         return <ColourButton
                             key={uuidv4()}
