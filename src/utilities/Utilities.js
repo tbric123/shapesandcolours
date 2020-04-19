@@ -13,18 +13,9 @@ function getRandomSet(array, numberOfElements) {
 
     // Pull out three random elements from the array
     let randomSet = [];
-    console.log("BEFORE THE FUNCTION IS FINISHED...");
-    console.log("Array now: " + arrayToMutate);
-    console.log("Original array: " + array)
-    console.log("Colours chosen: " + randomSet);
     for (var i = 0; i < numberOfElements; i++) {
       randomSet.push(getRandomElement(arrayToMutate, false));
     }
-    
-    console.log("AFTER THE FUNCTION IS FINISHED...");
-    console.log("Array now: " + arrayToMutate);
-    console.log("Original array: " + array)
-    console.log("Colours chosen: " + randomSet);
 
     return randomSet;
 }
