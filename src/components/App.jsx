@@ -65,7 +65,8 @@ function App() {
                 });
                 setClickable(true);
             } else {
-                setPromptValues({colour: "", shape: ""})
+                setPromptValues({colour: "", shape: ""});
+                setButtonColours([]);
             }
 
         }, 1000);
@@ -73,7 +74,17 @@ function App() {
     }
 
     function startNewGame() {
-        console.log("new game started");
+        const newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
+        setButtonColours(newButtonColours);
+        setPromptValues({
+            shape: Utilities.getRandomElement(shapes, true), colour: Utilities.getRandomElement(newButtonColours, true)
+        });
+
+        setShapeColour(Utilities.STARTING_COLOUR);
+        setShapeFeedback(Utilities.BLANK_FEEDBACK);
+        setRound(1);
+        setScore(0);
+        setClickable(true);
     }
 
     return (
@@ -92,7 +103,7 @@ function App() {
             <InformationBar title="Score" information={score}/>
             <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             <div className="componentArea">
-                {promptValues.shape === ""
+                {buttonColours.length === 0
                     ? <button onClick={startNewGame}>Start Over</button>
                     : buttonColours.map(function (colour) {
                         return <ColourButton
