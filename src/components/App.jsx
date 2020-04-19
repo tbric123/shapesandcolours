@@ -42,10 +42,10 @@ function App() {
         setShapeColour(newColour);
 
         if (promptValues.colour === newColour) {
-            setShapeFeedback("Correct!");
+            setShapeFeedback("CORRECT");
             setScore(score + 1);
         } else {
-            setShapeFeedback("Incorrect!");
+            setShapeFeedback("INCORRECT");
         }
 
         // Prevent buttons from being clicked before the next round
@@ -90,6 +90,8 @@ function App() {
     return (
         <div>
             <Header/>
+
+            <InformationBar title="Score" information={score}/>
             <div className="componentArea">
                 {promptValues.shape !== "" && <Shape
                     colour={shapeColour}
@@ -97,14 +99,13 @@ function App() {
                     feedback={shapeFeedback}/>}
 
             </div>
+            <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 
-            <InformationBar title="Score" information={score}/>
-            <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             <div className="componentArea">
                 {buttonColours.length === 0
-                    ? <button onClick={startNewGame}>Start Over</button>
+                    ? <button className="startOverButton" onClick={startNewGame}>Start Over</button>
                     : buttonColours.map(function (colour) {
                         let buttonNumber = 0;
                         return <ColourButton

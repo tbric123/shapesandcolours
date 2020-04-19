@@ -2,7 +2,7 @@ import React from "react";
 
 function InformationBar(props) {
     return (
-        <div>
+        <div className="informationBar">
             <p>{props.title}: {props.information}</p>
         </div>
     );
