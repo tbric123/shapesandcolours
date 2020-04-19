@@ -106,11 +106,14 @@ function App() {
                 {buttonColours.length === 0
                     ? <button onClick={startNewGame}>Start Over</button>
                     : buttonColours.map(function (colour) {
+                        let buttonNumber = 0;
                         return <ColourButton
                             key={uuidv4()}
                             onPress={checkChoice}
                             colour={colour}
-                            clickable={buttonsClickable}/>;
+                            clickable={buttonsClickable}
+                            number={buttonNumber + 1} />
+                            
                     })}
             </div>
 

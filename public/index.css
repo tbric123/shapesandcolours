@@ -1,3 +1,7 @@
+body {
+  font-family: 'Kalam', cursive;
+}
+
 .mainHeader {
   text-align: center;
 }
@@ -6,6 +10,10 @@
   text-align: center;
 }
 
+.buttonArea {
+  text-align: center;
+
+}
 .shapeBox {
   display: inline-block;
   border: 1px black dashed;
