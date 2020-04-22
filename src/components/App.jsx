@@ -42,10 +42,10 @@ function App() {
         setShapeColour(newColour);
 
         if (promptValues.colour === newColour) {
-            setShapeFeedback("CORRECT");
+            setShapeFeedback("CORRECT!");
             setScore(score + 1);
         } else {
-            setShapeFeedback("INCORRECT");
+            setShapeFeedback("INCORRECT!");
         }
 
         // Prevent buttons from being clicked before the next round
@@ -77,7 +77,8 @@ function App() {
         const newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
         setButtonColours(newButtonColours);
         setPromptValues({
-            shape: Utilities.getRandomElement(shapes, true), colour: Utilities.getRandomElement(newButtonColours, true)
+            shape: Utilities.getRandomElement(shapes, true),
+            colour: Utilities.getRandomElement(newButtonColours, true)
         });
 
         setShapeColour(Utilities.STARTING_COLOUR);
@@ -93,10 +94,12 @@ function App() {
 
             <InformationBar title="Score" information={score}/>
             <div className="componentArea">
-                {promptValues.shape !== "" && <Shape
-                    colour={shapeColour}
-                    shape={promptValues.shape}
-                    feedback={shapeFeedback}/>}
+                {promptValues.shape !== ""
+                    ? <Shape
+                            colour={shapeColour}
+                            shape={promptValues.shape}
+                            feedback={shapeFeedback}/>
+                    : <button className="startOverButton" onClick={startNewGame}>Start Over</button>}
 
             </div>
             <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
@@ -104,18 +107,16 @@ function App() {
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 
             <div className="componentArea">
-                {buttonColours.length === 0
-                    ? <button className="startOverButton" onClick={startNewGame}>Start Over</button>
-                    : buttonColours.map(function (colour) {
-                        let buttonNumber = 0;
-                        return <ColourButton
-                            key={uuidv4()}
-                            onPress={checkChoice}
-                            colour={colour}
-                            clickable={buttonsClickable}
-                            number={buttonNumber + 1} />
-                            
-                    })}
+                {buttonColours.length !== 0 && buttonColours.map(function (colour) {
+                    let buttonNumber = 0;
+                    return <ColourButton
+                        key={uuidv4()}
+                        onPress={checkChoice}
+                        colour={colour}
+                        clickable={buttonsClickable}
+                        number={buttonNumber + 1}/>
+
+                })}
             </div>
 
             <Footer/>
