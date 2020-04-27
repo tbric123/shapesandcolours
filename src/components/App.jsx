@@ -2,7 +2,7 @@ import React from "react";
 import {v4 as uuidv4} from "uuid";
 
 /* Data Imports */
-import colours from "../data/colours";
+import {colours, colourMap} from "../data/colours";
 import shapes from "../data/shapes";
 
 /* Utilities */
@@ -114,7 +114,7 @@ function App() {
                     return <ColourButton
                         key={uuidv4()}
                         onPress={checkChoice}
-                        colour={colour}
+                        colour={colourMap[colour]}
                         clickable={buttonsClickable}
                         number={buttonNumber + 1}/>
 
