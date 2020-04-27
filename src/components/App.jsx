@@ -12,6 +12,7 @@ import * as Utilities from "../utilities/Utilities";
 import Header from "./Header";
 import Shape from "./Shape";
 import Prompt from "./Prompt";
+import Message from "./Message";
 import ColourButton from "./ColourButton";
 import InformationBar from "./InformationBar";
 import Footer from "./Footer";
@@ -90,19 +91,20 @@ function App() {
 
     return (
         <div>
+
             <Header/>
-
-            <InformationBar title="Score" information={score}/>
             <div className="componentArea">
-                {promptValues.shape !== ""
-                    ? <Shape
-                            colour={shapeColour}
-                            shape={promptValues.shape}
-                            feedback={shapeFeedback}/>
-                    : <button className="startOverButton" onClick={startNewGame}>Start Over</button>}
+                <div className="shapeBox">
+                    {promptValues.shape !== ""
+                        ? <Shape colour={shapeColour} shape={promptValues.shape}/>
+                        : <div>
+                            <button className="startOverButton" onClick={startNewGame}>Start Over</button><br/></div>}
+                </div>
 
+                <Message text={shapeFeedback}/>
+                <InformationBar title="Score" information={score}/>
+                <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             </div>
-            <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 

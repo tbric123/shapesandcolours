@@ -37,21 +37,7 @@ function Shape(props) {
             break;
     }
 
-    return (
-        <div>
-            <div className="shapeBox">
-                <div className="shape" style={shapeStyle}></div>
-
-            </div>
-            <div
-                className="feedback"
-                style={props.feedback === "|||"
-                ? {
-                    visibility: "hidden"
-                }
-                : null}>{props.feedback}</div>
-        </div>
-
+    return (<div className="shape" style={shapeStyle}></div>
     );
 }
 

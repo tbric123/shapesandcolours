@@ -25,6 +25,8 @@ body {
   display: inline-block;
   border-radius: 20px;
   padding: 2px;
+  width: 150px;
+  margin: 2px;
 }
 
 .shapeBox {
@@ -33,18 +35,19 @@ body {
   border-radius: 10px;
   padding: 30px 0 30px 0;
   width: 400px;
-  height: 200px;
+  height: 50%;
   text-align: center;
-  margin: 0 10px 0 10px;
+  margin: 10px;
 }
 
 .shape {
   background-color: white;
   border: 1px solid;
   margin: auto;
+  width: 100px;
 }
 
-.feedback {
+.message {
   margin: 10px;
 }
 
