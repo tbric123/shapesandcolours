@@ -1,3 +1,13 @@
+// TODO: Level select
+// 1) Pick the right colour
+// 2) Two shapes to colour
+// 3) Work out the shape and choose the right colour
+
+// TODO: Sound effects
+// Right, wrong, game over
+
+// TODO: Animations
+// Right, wrong, game over
 import React from "react";
 import {v4 as uuidv4} from "uuid";
 
