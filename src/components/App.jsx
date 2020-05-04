@@ -22,6 +22,7 @@ import * as Utilities from "../utilities/Utilities";
 import Header from "./Header";
 import Shape from "./Shape";
 import Prompt from "./Prompt";
+import Selection from "./Selection";
 import Message from "./Message";
 import ColourButton from "./ColourButton";
 import InformationBar from "./InformationBar";
@@ -30,6 +31,7 @@ import Footer from "./Footer";
 function App() {
     let newButtonColours;
 
+    const [selectedColour, setSelectedColour] = React.useState(Utilities.STARTING_COLOUR);
     const [shapeColour,
         setShapeColour] = React.useState(Utilities.STARTING_COLOUR);
     const [buttonColours,
@@ -43,18 +45,25 @@ function App() {
     });
     const [round,
         setRound] = React.useState(1);
-    const [score,
-        setScore] = React.useState(0);
     const [buttonsClickable,
         setClickable] = React.useState(true);
 
-    function checkChoice(newColour) {
+    function colourShape() {
+      // Don't do anything unless a colour is selected.
+      if (selectedColour !== Utilities.STARTING_COLOUR) {
+          console.log("Colour has been selected");
+          setShapeColour(selectedColour);
+      } else {
+          console.log("Colour not selected");
+      }
+    }
+    function selectColour(newColour) {
         // Set the colour of the shape to what the user specified
-        setShapeColour(newColour);
+        setSelectedColour(newColour);
 
+        /*
         if (promptValues.colour === newColour) {
             setShapeFeedback("CORRECT!");
-            setScore(score + 1);
         } else {
             setShapeFeedback("INCORRECT!");
         }
@@ -81,7 +90,7 @@ function App() {
             }
 
         }, 1000);
-
+        */
     }
 
     function startNewGame() {
@@ -94,8 +103,6 @@ function App() {
 
         setShapeColour(Utilities.STARTING_COLOUR);
         setShapeFeedback(Utilities.BLANK_FEEDBACK);
-        setRound(1);
-        setScore(0);
         setClickable(true);
     }
 
@@ -104,26 +111,19 @@ function App() {
 
             <Header/>
             <div className="componentArea">
-                <div className="shapeBox">
-                    {promptValues.shape !== ""
-                        ? <Shape colour={shapeColour} shape={promptValues.shape}/>
-                        : <div>
-                            <button className="startOverButton" onClick={startNewGame}>Start Over</button><br/></div>}
-                </div>
-
+                <Shape colour={shapeColour} shape="square" onPress={colourShape}/>
                 <Message text={shapeFeedback}/>
-                <InformationBar title="Score" information={score}/>
-                <InformationBar title="Round" information={round + "/" + Utilities.MAX_ROUND}/>
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
+            <Selection colour={selectedColour} />
 
             <div className="componentArea">
                 {buttonColours.length !== 0 && buttonColours.map(function (colour) {
                     let buttonNumber = 0;
                     return <ColourButton
                         key={uuidv4()}
-                        onPress={checkChoice}
+                        onPress={selectColour}
                         colour={colourMap[colour]}
                         clickable={buttonsClickable}
                         number={buttonNumber + 1}/>
