@@ -1,13 +1,9 @@
-// TODO: Level select
-// 1) Pick the right colour
-// 2) Two shapes to colour
-// 3) Work out the shape and choose the right colour
+// TODO: Level select 1) Pick the right colour 2) Two shapes to colour 3) Work
+// out the shape and choose the right colour
 
-// TODO: Sound effects
-// Right, wrong, game over
+// TODO: Sound effects Right, wrong, game over
 
-// TODO: Animations
-// Right, wrong, game over
+// TODO: Animations Right, wrong, game over
 import React from "react";
 import {v4 as uuidv4} from "uuid";
 
@@ -31,7 +27,8 @@ import Footer from "./Footer";
 function App() {
     let newButtonColours;
 
-    const [selectedColour, setSelectedColour] = React.useState(Utilities.STARTING_COLOUR);
+    const [selectedColour,
+        setSelectedColour] = React.useState(Utilities.STARTING_COLOUR);
     const [shapeColour,
         setShapeColour] = React.useState(Utilities.STARTING_COLOUR);
     const [buttonColours,
@@ -49,48 +46,44 @@ function App() {
         setClickable] = React.useState(true);
 
     function colourShape() {
-      // Don't do anything unless a colour is selected.
-      if (selectedColour !== Utilities.STARTING_COLOUR) {
-          console.log("Colour has been selected");
-          setShapeColour(selectedColour);
-      } else {
-          console.log("Colour not selected");
-      }
+        // Don't do anything unless a colour is selected.
+        if (selectedColour !== Utilities.STARTING_COLOUR) {
+            setShapeColour(selectedColour);
+            if (colourMap[promptValues.colour] === selectedColour) {
+                setShapeFeedback("CORRECT!");
+
+                // Prevent buttons from being clicked before the next round
+                setClickable(false);
+
+                // Advance to the next round after 1 second
+                setTimeout(function () {
+                    setShapeFeedback(Utilities.BLANK_FEEDBACK);
+                    if (round < Utilities.MAX_ROUND) {
+                        setRound(round + 1);
+                        setShapeColour(Utilities.STARTING_COLOUR);
+                        newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
+                        setButtonColours(newButtonColours);
+                        setPromptValues({
+                            colour: Utilities.getRandomElement(newButtonColours, true),
+                            shape: Utilities.getRandomElement(shapes, true)
+                        });
+                        setSelectedColour(Utilities.STARTING_COLOUR);
+                        setClickable(true);
+                    } else {
+                        setPromptValues({colour: "", shape: ""});
+                        setButtonColours([]);
+                    }
+
+                }, 1000);
+            } else {
+                setShapeFeedback("INCORRECT!");
+            }
+        }
     }
+
     function selectColour(newColour) {
         // Set the colour of the shape to what the user specified
         setSelectedColour(newColour);
-
-        /*
-        if (promptValues.colour === newColour) {
-            setShapeFeedback("CORRECT!");
-        } else {
-            setShapeFeedback("INCORRECT!");
-        }
-
-        // Prevent buttons from being clicked before the next round
-        setClickable(false);
-
-        // Advance to the next round after 1 second
-        setTimeout(function () {
-            setShapeFeedback(Utilities.BLANK_FEEDBACK);
-            if (round < Utilities.MAX_ROUND) {
-                setRound(round + 1);
-                setShapeColour(Utilities.STARTING_COLOUR);
-                newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
-                setButtonColours(newButtonColours);
-                setPromptValues({
-                    colour: Utilities.getRandomElement(newButtonColours, true),
-                    shape: Utilities.getRandomElement(shapes, true)
-                });
-                setClickable(true);
-            } else {
-                setPromptValues({colour: "", shape: ""});
-                setButtonColours([]);
-            }
-
-        }, 1000);
-        */
     }
 
     function startNewGame() {
@@ -111,12 +104,12 @@ function App() {
 
             <Header/>
             <div className="componentArea">
-                <Shape colour={shapeColour} shape="square" onPress={colourShape}/>
+                <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape}/>
                 <Message text={shapeFeedback}/>
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
-            <Selection colour={selectedColour} />
+            <Selection colour={selectedColour}/>
 
             <div className="componentArea">
                 {buttonColours.length !== 0 && buttonColours.map(function (colour) {
