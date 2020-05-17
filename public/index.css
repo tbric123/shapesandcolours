@@ -71,6 +71,11 @@ body {
   border-radius: 20px;
 }
 
+button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
 .footer {
   text-align: center;
   margin: 0;
