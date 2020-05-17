@@ -50,7 +50,7 @@ function App() {
         if (selectedColour !== Utilities.STARTING_COLOUR) {
             setShapeColour(selectedColour);
             if (colourMap[promptValues.colour] === selectedColour) {
-                setShapeFeedback("CORRECT!");
+                setShapeFeedback("Yay!");
 
                 // Prevent buttons from being clicked before the next round
                 setClickable(false);
@@ -76,7 +76,7 @@ function App() {
 
                 }, 1000);
             } else {
-                setShapeFeedback("INCORRECT!");
+                setShapeFeedback("Whoops, try again...");
             }
         }
     }
@@ -94,6 +94,7 @@ function App() {
             colour: Utilities.getRandomElement(newButtonColours, true)
         });
 
+        setSelectedColour(Utilities.STARTING_COLOUR);
         setShapeColour(Utilities.STARTING_COLOUR);
         setShapeFeedback(Utilities.BLANK_FEEDBACK);
         setClickable(true);
@@ -113,16 +114,19 @@ function App() {
                 {gameIsOver()
                     ? <img src={require("../images/wellDone.png")} alt="Well done!"/> // require() is needed to import images into code
                     : <div>
-                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape} />
-                        <Message text={shapeFeedback} />
-                      </div>
-                    }
+                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape}/>
+                        <Message text={shapeFeedback}/>
+                    </div>
+}
 
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
-            {gameIsOver() ? <button onClick={startNewGame}>Play Again</button> : <Selection colour={selectedColour}/>}
-            
+
+            <div className="componentArea">{gameIsOver()
+                ? <button class="startOverButton" onClick={startNewGame}>Play Again</button>
+                : <Selection colour={selectedColour}/>}</div>
+
             <div className="componentArea">
                 {buttonColours.length !== 0 && buttonColours.map(function (colour) {
                     let buttonNumber = 0;

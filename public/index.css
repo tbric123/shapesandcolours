@@ -63,11 +63,12 @@ body {
 }
 
 .startOverButton {
-  background-color: #19FFD1;
+  background-color: #FEC200;
   font-family: 'Kalam', cursive;
   font-size: large;
-  width: 400px;
-  height: 200px;
+  width: 200px;
+  height: 100px;
+  border-radius: 20px;
 }
 
 .footer {
