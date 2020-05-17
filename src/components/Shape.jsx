@@ -38,7 +38,7 @@ function Shape(props) {
     }
 
     return (
-        <div className="shape" style={shapeStyle} onClick={() => {props.onPress()}}></div>
+        <div className="shape" style={shapeStyle} onClick={() => {if (props.clickable) {props.onPress()}}}></div>
     );
 }
 

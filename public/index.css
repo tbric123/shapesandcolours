@@ -45,7 +45,7 @@ body {
   border: 1px solid;
   margin: auto;
   width: 100px;
-  cursor: url("./assets/paintCursor.gif"), default;
+  cursor: url("./assets/paintCursor.gif"), default; /* https://www.tutorialrepublic.com/faq/how-to-create-custom-cursor-using-css.php */
 }
 
 .message {

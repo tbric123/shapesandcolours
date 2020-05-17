@@ -1,11 +1,13 @@
 // TODO: Level select 1) Pick the right colour 2) Two shapes to colour 3) Work
 // out the shape and choose the right colour
 
-// TODO: Sound effects Right, wrong, game over
-
 // TODO: Animations Right, wrong, game over
+
+/* npm modules */
 import React from "react";
 import {v4 as uuidv4} from "uuid";
+import rightSound from "../sounds/right.wav";
+import wrongSound from "../sounds/wrong.wav";
 
 /* Data Imports */
 import {colours, colourMap} from "../data/colours";
@@ -21,8 +23,8 @@ import Prompt from "./Prompt";
 import Selection from "./Selection";
 import Message from "./Message";
 import ColourButton from "./ColourButton";
-import InformationBar from "./InformationBar";
 import Footer from "./Footer";
+import GameSelectionMenu from "./GameSelectionMenu";
 
 function App() {
     let newButtonColours;
@@ -42,17 +44,22 @@ function App() {
     });
     const [round,
         setRound] = React.useState(1);
-    const [buttonsClickable,
+    const [clickable,
         setClickable] = React.useState(true);
+
+    const [atGameSelect,
+        setGameSelectState] = React.useState(true);
 
     function colourShape() {
         // Don't do anything unless a colour is selected.
         if (selectedColour !== Utilities.STARTING_COLOUR) {
             setShapeColour(selectedColour);
             if (colourMap[promptValues.colour] === selectedColour) {
+                // Give feedback
+                playFeedbackSound(true);
                 setShapeFeedback("Yay!");
 
-                // Prevent buttons from being clicked before the next round
+                // Prevent buttons and shape from being clicked before the next round
                 setClickable(false);
 
                 // Advance to the next round after 1 second
@@ -72,10 +79,12 @@ function App() {
                     } else {
                         setPromptValues({colour: "", shape: ""});
                         setButtonColours([]);
+                        playFeedbackSound(true);
                     }
 
-                }, 1000);
+                }, 1500);
             } else {
+                playFeedbackSound(false);
                 setShapeFeedback("Whoops, try again...");
             }
         }
@@ -86,7 +95,18 @@ function App() {
         setSelectedColour(newColour);
     }
 
+    function playFeedbackSound(right) {
+        let sound;
+        if (right) {
+            sound = new Audio(rightSound);
+        } else {
+            sound = new Audio(wrongSound);
+        }
+        sound.play();
+    }
     function startNewGame() {
+        console.log("New game started!");
+        setGameSelectState(false);
         const newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
         setButtonColours(newButtonColours);
         setPromptValues({
@@ -106,15 +126,15 @@ function App() {
         return promptValues.shape === "" && promptValues.colour === "";
     }
 
-    return (
-        <div>
-
+    return (atGameSelect
+        ? <GameSelectionMenu gameStart={startNewGame}/>
+        : <div>
             <Header/>
             <div className="componentArea">
                 {gameIsOver()
                     ? <img src={require("../images/wellDone.png")} alt="Well done!"/> // require() is needed to import images into code
                     : <div>
-                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape}/>
+                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape} clickable={clickable}/>
                         <Message text={shapeFeedback}/>
                     </div>
 }
@@ -124,8 +144,8 @@ function App() {
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 
             <div className="componentArea">{gameIsOver()
-                ? <button class="startOverButton" onClick={startNewGame}>Play Again</button>
-                : <Selection colour={selectedColour}/>}</div>
+                    ? <button class="startOverButton" onClick={startNewGame}>Play Again</button>
+                    : <Selection colour={selectedColour}/>}</div>
 
             <div className="componentArea">
                 {buttonColours.length !== 0 && buttonColours.map(function (colour) {
@@ -134,15 +154,14 @@ function App() {
                         key={uuidv4()}
                         onPress={selectColour}
                         colour={colourMap[colour]}
-                        clickable={buttonsClickable}
+                        clickable={clickable}
                         number={buttonNumber + 1}/>
 
                 })}
             </div>
 
             <Footer/>
-        </div>
-    );
+        </div>);
 }
 
 export default App;
