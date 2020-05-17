@@ -45,6 +45,7 @@ body {
   border: 1px solid;
   margin: auto;
   width: 100px;
+  cursor: url("./assets/paintCursor.gif"), default;
 }
 
 .message {
