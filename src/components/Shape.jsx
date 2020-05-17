@@ -8,7 +8,8 @@ function Shape(props) {
     // Set the shape's colour
     let shapeStyle = {
         backgroundColor: props.colour,
-        border: "5px solid"
+        border: "5px solid",
+        marginTop: "10px"
     }
 
     // Work out what shape we're going to display

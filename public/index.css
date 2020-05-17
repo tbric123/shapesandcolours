@@ -63,13 +63,19 @@ body {
   margin: 10px;
 }
 
-.startOverButton {
-  background-color: #FEC200;
+.bigButton {
   font-family: 'Kalam', cursive;
   font-size: large;
   width: 200px;
-  height: 100px;
   border-radius: 20px;
+}
+
+.startOverButton {
+  background-color: #FEC200;
+}
+
+.backToMenuButton {
+  background-color: #13F806;
 }
 
 button:hover {

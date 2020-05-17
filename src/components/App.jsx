@@ -1,6 +1,5 @@
-// TODO: Level select 1) Pick the right colour 2) Two shapes to colour 3) Work
+// TODO: Level select 1) Pick the right colour 2) Work
 // out the shape and choose the right colour
-
 // TODO: Animations Right, wrong, game over
 
 /* npm modules */
@@ -104,8 +103,12 @@ function App() {
         }
         sound.play();
     }
+
+    function backToMenu() {
+        setGameSelectState(true);
+    }
+
     function startNewGame() {
-        console.log("New game started!");
         setGameSelectState(false);
         const newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
         setButtonColours(newButtonColours);
@@ -144,7 +147,10 @@ function App() {
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
 
             <div className="componentArea">{gameIsOver()
-                    ? <button class="startOverButton" onClick={startNewGame}>Play Again</button>
+                    ? <div>
+                      <button className="bigButton startOverButton" onClick={startNewGame}>Play Again</button>
+                      <button class="bigButton backToMenuButton" onClick={backToMenu}>Play Another Game</button>
+                      </div>
                     : <Selection colour={selectedColour}/>}</div>
 
             <div className="componentArea">
