@@ -97,6 +97,12 @@ function App() {
         setShapeColour(Utilities.STARTING_COLOUR);
         setShapeFeedback(Utilities.BLANK_FEEDBACK);
         setClickable(true);
+        setRound(1);
+    }
+
+    // Determine whether or not the game is over
+    function gameIsOver() {
+        return promptValues.shape === "" && promptValues.colour === "";
     }
 
     return (
@@ -104,13 +110,19 @@ function App() {
 
             <Header/>
             <div className="componentArea">
-                <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape}/>
-                <Message text={shapeFeedback}/>
+                {gameIsOver()
+                    ? <img src={require("../images/wellDone.png")} alt="Well done!"/> // require() is needed to import images into code
+                    : <div>
+                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape} />
+                        <Message text={shapeFeedback} />
+                      </div>
+                    }
+
             </div>
 
             <Prompt shape={promptValues.shape} colour={promptValues.colour}/>
-            <Selection colour={selectedColour}/>
-
+            {gameIsOver() ? <button onClick={startNewGame}>Play Again</button> : <Selection colour={selectedColour}/>}
+            
             <div className="componentArea">
                 {buttonColours.length !== 0 && buttonColours.map(function (colour) {
                     let buttonNumber = 0;

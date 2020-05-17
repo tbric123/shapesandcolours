@@ -3,7 +3,7 @@ import React from "react";
 function Prompt(props) {
     let promptText;
     if (props.shape === "" && props.colour === "") {
-        promptText = "Game finished.";
+        promptText = "Well done!";
     } else {
         promptText = "Colour the " + props.shape + " " + props.colour.toUpperCase() + ".";
     }
