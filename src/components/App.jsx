@@ -1,5 +1,5 @@
-// TODO: Level select 1) Pick the right colour 2) Work
-// out the shape and choose the right colour
+// TODO: Level select 1) Pick the right colour 2) Work out the shape and choose
+// the right colour
 // TODO: Animations Right, wrong, game over
 
 /* npm modules */
@@ -23,7 +23,6 @@ import Selection from "./Selection";
 import Message from "./Message";
 import ColourButton from "./ColourButton";
 import Footer from "./Footer";
-import GameSelectionMenu from "./GameSelectionMenu";
 
 function App() {
     let newButtonColours;
@@ -45,9 +44,6 @@ function App() {
         setRound] = React.useState(1);
     const [clickable,
         setClickable] = React.useState(true);
-
-    const [atGameSelect,
-        setGameSelectState] = React.useState(true);
 
     function colourShape() {
         // Don't do anything unless a colour is selected.
@@ -104,12 +100,7 @@ function App() {
         sound.play();
     }
 
-    function backToMenu() {
-        setGameSelectState(true);
-    }
-
     function startNewGame() {
-        setGameSelectState(false);
         const newButtonColours = Utilities.getRandomSet(colours, Utilities.BUTTON_COUNT);
         setButtonColours(newButtonColours);
         setPromptValues({
@@ -129,15 +120,18 @@ function App() {
         return promptValues.shape === "" && promptValues.colour === "";
     }
 
-    return (atGameSelect
-        ? <GameSelectionMenu gameStart={startNewGame}/>
-        : <div>
+    return (
+        <div>
             <Header/>
             <div className="componentArea">
                 {gameIsOver()
                     ? <img src={require("../images/wellDone.png")} alt="Well done!"/> // require() is needed to import images into code
                     : <div>
-                        <Shape colour={shapeColour} shape={promptValues.shape} onPress={colourShape} clickable={clickable}/>
+                        <Shape
+                            colour={shapeColour}
+                            shape={promptValues.shape}
+                            onPress={colourShape}
+                            clickable={clickable}/>
                         <Message text={shapeFeedback}/>
                     </div>
 }
@@ -148,9 +142,8 @@ function App() {
 
             <div className="componentArea">{gameIsOver()
                     ? <div>
-                      <button className="bigButton startOverButton" onClick={startNewGame}>Play Again</button>
-                      <button class="bigButton backToMenuButton" onClick={backToMenu}>Play Another Game</button>
-                      </div>
+                            <button className="bigButton startOverButton" onClick={startNewGame}>Play Again</button>
+                        </div>
                     : <Selection colour={selectedColour}/>}</div>
 
             <div className="componentArea">
@@ -167,7 +160,8 @@ function App() {
             </div>
 
             <Footer/>
-        </div>);
+        </div>
+    );
 }
 
 export default App;
