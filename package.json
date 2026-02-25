@@ -16,7 +16,8 @@
   },
   "overrides": {
     "jsonpath": "npm:jsonpath-plus@^10.4.0",
-	"postcss": "npm:postcss@8.5.6"
+    "webpack-dev-server": "npm:webpack-dev-server@5.2.1",
+    "postcss": "npm:postcss@8.5.6"
   },
   "scripts": {
     "start": "react-scripts start",
