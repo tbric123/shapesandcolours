@@ -19,7 +19,7 @@
     "webpack-dev-server": "npm:webpack-dev-server@5.2.1",
     "postcss": "npm:postcss@8.5.6",
     "svgo": "npm:svgo@2.8.2",
-    "serialize-javascript": "npm:serialize-javascript@7.0.3",
+    "serialize-javascript": "npm:serialize-javascript@7.0.5",
     "@tootallnate/once": "npm:@tootallnate/once@3.0.1"
   },
   "scripts": {
